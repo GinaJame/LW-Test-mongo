@@ -49,8 +49,23 @@ module.exports = {
             }
         })
     },
-
-
+    welcome: function(req, res, next){
+        res.redirect('usuarios/welcomePage', { errors:{}, usuario: new Usuario() } )
+    },
+    login_get: function(req, res, next){
+        res.render('usuarios/login', { errors:{}, usuario: new Usuario() } )
+    },
+    login: function(req, res, next){
+        Usuario.findOne({email: req.body.email}, function(err, user){
+            if (user === null){
+                res.status(404).json("Email is not registered")
+            }else if(!user.validPassword(req.body.password)){
+                res.status(404).json("Incorrect password")
+            }
+            res.render("usuarios/welcome", {errors: {}, usuario: user })
+        })
+        
+    },
     delete: function(req, res, next){
         Usuario.findByIdAndDelete(req.body.id, function(err){
             if(err)
