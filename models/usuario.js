@@ -79,6 +79,7 @@ usuarioSchema.methods.enviar_mail_bienvenida = function(cb) {
 
             console.log('Se envió un mail de confirmación a: ' + email_destination)
         })
+        
     })
 }
 

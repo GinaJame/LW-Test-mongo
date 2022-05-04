@@ -1,6 +1,7 @@
 
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
+let Usuario = require('../models/usuario')
 
 var bicicletaSchema = new Schema({
     code: Number,
@@ -8,7 +9,9 @@ var bicicletaSchema = new Schema({
     modelo: String,
     ubicacion: {
         type: [Number], index: {type: '2dsphere', sparse: true}
-    }
+    },
+    apartada: Boolean, 
+    usuario_id: {type: mongoose.Schema.Types.ObjectId}
 })
 
 bicicletaSchema.statics.createInstance = function (code, color, modelo, ubicacion) {
@@ -47,5 +50,6 @@ bicicletaSchema.statics.findByCode = function (aCode, cb) {
 bicicletaSchema.statics.removeByCode = function (aCode, cb) {
     return this.deleteOne({ code: aCode }, cb)
 }
+
 
 module.exports = mongoose.model('Bicicleta', bicicletaSchema)

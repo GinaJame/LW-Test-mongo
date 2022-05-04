@@ -9,6 +9,7 @@ module.exports = {
                 if (err) {
                     return res.status(500).send({msg:err.message})
                 }
+                document.cookie='access_token='+ token
                 res.redirect('/')
             });
         })

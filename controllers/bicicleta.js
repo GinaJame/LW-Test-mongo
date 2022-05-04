@@ -41,4 +41,15 @@ exports.bicicleta_update_post = function (req, res) {
         res.redirect('/bicicletas')
     });
 
+}
+
+exports.bicicleta_get_post = function (req, res) {
+    console.log("entro al método")
+    Bicicleta.findById({ _id: req.params.id }).then(function (bici) {
+        bici.apartada = true
+        //bici.usuario_id= req.body.user
+        bici.save()
+        res.redirect('/bicicletas')
+    });
+
 } 
