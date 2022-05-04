@@ -56,10 +56,15 @@ module.exports = {
         res.render('usuarios/login', { errors:{}, usuario: new Usuario() } )
     },
     login: function(req, res, next){
-        Usuario.findOne({email: req.body.email}, function(err, user){
+        Usuario.findOne({email: req.body.email}, async function(err, user){
             if (user === null){
                 res.status(404).json("Email is not registered")
-            }else if(!user.validPassword(req.body.password)){
+            }
+            if (!user.verificado){
+                res.status(404).json("Please confirm your email")
+            }
+            validPass = await user.validPassword(req.body.password);
+            if(!validPass){
                 res.status(404).json("Incorrect password")
             }
             res.render("usuarios/welcome", {errors: {}, usuario: user })
