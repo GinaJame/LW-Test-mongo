@@ -1,6 +1,7 @@
 let Usuario = require('../models/usuario')
 let Token = require('../models/token')
 
+
 module.exports = {
     confirmationGet: function(req, res, next){
         Token.findOne({ token: req.params.token }, function(err, token){
@@ -9,8 +10,7 @@ module.exports = {
                 if (err) {
                     return res.status(500).send({msg:err.message})
                 }
-
-                res.redirect('/', {session: token})
+                res.redirect('/')
             });
             
         })
